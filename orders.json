@@ -1,0 +1,42 @@
+{"orders" : [
+    {
+        "reference": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "currency": "EUR",
+        "grand_total": 0,
+        "recipient_address": {
+            "company": "BLIBOX",
+            "firstname": null,
+            "lastname": null,
+            "street1": "Riera de Caldes s/n",
+            "street2": null,
+            "postcode": "93200",
+            "city": "Vilanova i la Getru",
+            "state": null,
+            "country": "ES",
+            "telephone": "+34 902 474 500",
+            "email": "bdemange@parcelontime.es"
+        },
+        "shipper_address": {
+            "company": "BLIBOX",
+            "firstname": null,
+            "lastname": null,
+            "street1": "Riera de Caldes s/n",
+            "street2": null,
+            "postcode": "93200",
+            "city": "Vilanova i la Getru",
+            "state": null,
+            "country": "ES",
+            "telephone": "+34 902 474 500",
+            "email": "bdemange@parcelontime.es"
+        },
+        "carrier_code": "VOID",
+        "items": [
+            {
+                "sku": "product_a",
+                "price": 0,
+                "qty": 1
+            }
+        ]
+    }
+]
+}

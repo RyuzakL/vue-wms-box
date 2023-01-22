@@ -1,0 +1,32 @@
+{"boxs" : [
+    {
+        "sku": "JBX-2302-104",
+        "childs": [
+            {"sku": "BLI-SHIPPERBLISSIM-JBX2202", "qty": 1},
+            {"sku": "INH-HUILEDESOINFORT-JBX2301", "qty": 1},
+            {"sku": "HEL-ALOESIGHTHYDRAT-JBX2212", "qty": 1},
+            {"sku": "BLI-SACHETSDETHEPAN-JBX2301", "qty": 1},
+            {"sku": "PAE-BLUSHARGANOIL-JBX2301", "qty": 1},
+            {"sku": "HUY-CREMEVISAGEHYAL-JBX2301", "qty": 1},
+            {"sku": "LAR-STICKALEVRESNOU-JBX2301", "qty": 1},
+            {"sku": "BLI-BOITEVIDE2-JBX2301", "qty": 1},
+            {"sku": "ULZ-FLYERPANDATEA-JBX2301", "qty": 1},
+            {"sku": "MENU-JBX-2301-03", "qty": 1}
+        ]
+    },
+    {
+        "sku": "JBX-2302-103",
+        "childs": [
+            {"sku": "BLI-SHIPPERBLISSIM-JBX2202", "qty": 1},
+            {"sku": "LAR-BAUMESOSREPARAT-JBX2301", "qty": 1},
+            {"sku": "LAR-CREMEHYDRATANTV-JBX2301", "qty": 1},
+            {"sku": "BLI-SACHETSDETHEPAN-JBX2301", "qty": 1},
+            {"sku": "LAR-GOMMAGEDOUXVISA-JBX2301", "qty": 1},
+            {"sku": "LAR-STICKALEVRESNOU-JBX2301", "qty": 1},
+            {"sku": "BLI-BOITEVIDE1-JBX2301", "qty": 1},
+            {"sku": "LAR-MASQUEENSTICKRE-JBX2301", "qty": 1},
+            {"sku": "ULZ-FLYERPANDATEA-JBX2301", "qty": 1},
+            {"sku": "MENU-JBX-2301-02", "qty": 1}
+        ]
+    }
+]}
