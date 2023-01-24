@@ -1,3 +1,29 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+html,
+button,
+input {
+  color: rgb(15, 15, 15);
+  font-family: "Sono", sans-serif;
+}
+input,
+button {
+  font-weight: 800;
+}
+
 body {
-    background-color: grey;
+  background: rgb(200, 206, 240);
+  background: linear-gradient(
+    90deg,
+    rgba(200, 206, 240, 1) 0%,
+    rgba(247, 219, 224, 1) 100%
+  );
+  background-repeat: no-repeat;
+  height: 100vh;
 }

@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "jserve-orders" : "json-server --watch orders.json ",
-    "jserve-box" : "json-server --port 4000 --watch box.json ",
+    "jserve-orders": "json-server --watch orders.json ",
+    "jserve-box": "json-server --port 4000 --watch box.json ",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.7",
+    "axios": "^1.2.3",
     "json-server": "^0.17.1",
     "vue": "^3.2.45"
   },
