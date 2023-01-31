@@ -1,28 +1,28 @@
 <script setup>
-import { ref } from "vue";
-const inputRef = ref("");
-const isRefAdd = ref(false);
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-const emit = defineEmits(["add-new-ref"]);
+const store = useStore();
+const order = computed({
+  get: () => store.state.order,
+  set: (newRef) => {
+    store.dispatch("updateOrderRef", newRef);
+  },
+});
 
-function addRefOrder(e) {
-  inputRef.value = e.target.value;
-  emit("add-new-ref", inputRef.value);
-  isRefAdd.value = true;
-}
 function isValidInput(e) {
   if (!e.key.match(/^[A-Za-z0-9\-_]+$/)) e.preventDefault();
 }
 </script>
 
 <template>
-  <div>
-    <span>Ajouter Ref Box => </span>
+  <div v-if="order" class="margin-btm">
+    <div class="margin-btm">Ajouter référence commande :</div>
     <input
-      :value="inputref"
-      @input="addRefOrder"
+      v-model="order.reference"
       @keypress="isValidInput"
       type="text"
+      placeholder="référence commande"
     />
   </div>
 </template>

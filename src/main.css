@@ -3,7 +3,6 @@
 *::after {
   margin: 0;
   padding: 0;
-  list-style-type: none;
 }
 
 html,
@@ -18,12 +17,6 @@ button {
 }
 
 body {
-  background: rgb(200, 206, 240);
-  background: linear-gradient(
-    90deg,
-    rgba(200, 206, 240, 1) 0%,
-    rgba(247, 219, 224, 1) 100%
-  );
-  background-repeat: no-repeat;
+  background-color: rgb(243, 243, 243);
   height: 100vh;
 }

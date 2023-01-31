@@ -1,57 +1,57 @@
-<script setup>
-import { ref, reactive, onMounted } from "vue";
-import RefCommand from "@/components/RefCommand.vue";
-import fetchHelper from "@/helper/fetchHelper";
-import SkuBox from "@/components/SkuBox.vue";
-
-const orders = ref([]);
-const boxs = reactive({
-  sku: "",
-  quantity: 1,
-});
-
-onMounted(() => {
-  // à modifer (promise.all) \\
-  fetchHelper
-    .getOrders()
-    .then((res) => (orders.value = res.data))
-    .catch((err) => console.error(err.message));
-
-  fetchHelper
-    .getBoxs()
-    .then((res) => (boxs.value = res.data))
-    .catch((err) => console.error(err.message));
-});
-
-function updateRefOrders(newRef) {
-  orders.value[0].reference = newRef;
-}
-</script>
-
 <template>
-  <div class="container">
-    <h1>Commande box</h1>
-
-    <RefCommand :orders="orders" @add-new-ref="updateRefOrders"></RefCommand>
-
-    <div>
-      <SkuBox :boxs="boxs"></SkuBox>
-    </div>
-
-    <div>
-      <span>Ajoutez quantité box => </span>
-      <input v-model.number="boxs.quantity" type="number" />
-      {{ boxs.quantity }}
-    </div>
-
-    <button v-show="boxs.sku">Ajouter box</button>
+  <div id="app" class="container">
+    <router-view />
   </div>
 </template>
 
 <style>
+.big {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
 .container {
   margin: 0 auto;
   width: 80%;
   max-width: 1200px;
 }
+
+.log-message {
+  color: blue;
+  font-weight: 600;
+}
+
+.margin-btm {
+  margin-bottom: 0.5rem;
+}
+
+.margin-top {
+  margin-top: 1rem;
+}
+
+.btn-validate {
+  margin-top: 1rem;
+  color: white;
+  background-color: rgb(58, 58, 209);
+  border: none;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+input {
+  padding: 0.5rem 0.7rem;
+  border-radius: 5px;
+  border: none;
+  filter: drop-shadow(4px 4px 3px rgba(0, 0, 0, 0.1));
+}
+
+input:focus {
+  outline: none;
+  outline: 1px solid rgba(0, 0, 0, 0.178);
+}
+
+button {
+  padding: 0.5rem 1rem;
+}
 </style>
+
+<script></script>
