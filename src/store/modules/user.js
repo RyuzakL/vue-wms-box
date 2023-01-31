@@ -1,5 +1,5 @@
 const state = () => ({
-  isUserLogged: true,
+  isUserLogged: false,
 });
 
 const actions = {
