@@ -37,6 +37,7 @@ const updateDisplayValue = (option) => {
   return option[props.propertyToDisplay]
     ? option[props.propertyToDisplay]
     : option;
+  // si jamais la valeur passé dans le v-model n'est pas un objet
 };
 </script>
 
