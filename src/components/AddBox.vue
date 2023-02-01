@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, reactive } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 
 import { useStore } from "vuex";
 import BaseCombobox from "./BaseCombobox.vue";
@@ -14,36 +14,39 @@ onMounted(() => {
   store.dispatch("fetchOrder");
 });
 
-const selectedBox = reactive({
-  refBox: "",
+const selectedBox = ref({
+  sku: "",
   boxQty: 1,
 });
 
 function addNewBox() {
   const currentBox = boxs.value
-    .filter((box) => box.sku === selectedBox.refBox)
+    .filter((box) => box.sku === selectedBox.value.sku)
     .pop();
 
-  currentBox.childs.forEach((child) => (child.qty = selectedBox.boxQty));
+  currentBox.childs.forEach((child) => (child.qty = selectedBox.value.boxQty));
 
   store.dispatch("addBox", {
-    sku: selectedBox.refBox,
-    qty: selectedBox.boxQty,
+    sku: selectedBox.value.sku,
+    qty: selectedBox.value.boxQty,
     childs: currentBox.childs,
   });
 
-  selectedBox.refBox = "";
-  selectedBox.boxQty = 1;
+  selectedBox.value.sku = "";
+  selectedBox.value.boxQty = 1;
 }
 const updateInput = (newInput) => (inputQuery.value = newInput);
+
+watch(selectedBox, () => {});
 </script>
 
 <template>
   <div class="margin-btm">Ajouter box :</div>
   <BaseCombobox
-    v-model="selectedBox.refBox"
+    v-model="selectedBox.sku"
     :options="boxs"
     placeholder="référence box"
+    :emptyPlaceholder="'Aucune box trouver'"
     :propertyToDisplay="'sku'"
     :query="inputQuery"
     @update:queryValue="updateInput"
@@ -52,11 +55,11 @@ const updateInput = (newInput) => (inputQuery.value = newInput);
   <input
     min="1"
     v-model.number="selectedBox.boxQty"
-    v-show="selectedBox.refBox"
+    v-show="selectedBox.sku"
     placeholder="Ajouter quantité"
     type="number"
   />
-  <button @click="addNewBox" v-show="selectedBox.boxQty && selectedBox.refBox">
+  <button @click="addNewBox" v-show="selectedBox.boxQty && selectedBox.sku">
     Ajoutez Box
   </button>
   <DisplayAddedBoxs></DisplayAddedBoxs>

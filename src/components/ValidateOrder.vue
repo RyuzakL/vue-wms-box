@@ -65,6 +65,7 @@ function validateCommand() {
     <h2 class="margin-btm">Votre commande a bien été enregistrer !</h2>
     <h3 class="margin-btm">Récapitulatif :</h3>
     <div class="container-details-command">
+      <div>Référence : {{ order.reference }}</div>
       <div>
         Site client : {{ siteClient.siteName }}/{{ siteClient.siteCode }}
       </div>

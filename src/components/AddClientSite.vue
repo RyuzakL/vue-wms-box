@@ -1,6 +1,6 @@
 <script setup>
 import fetchHelper from "../helper/fetchHelper";
-import BaseListBox from "@/components/BaseCombobox.vue";
+import BaseCombobox from "@/components/BaseCombobox.vue";
 import { watch, ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
@@ -24,23 +24,19 @@ watch(input, async () => {
   const res = await fetchHelper.getSiteClients(input.value);
   const data = await res.data.values;
   siteClientsArr.value = data;
-  console.log(siteClientsArr.value);
-});
-
-watch(siteClient, () => {
-  console.log(siteClient.value);
 });
 
 const updateInput = (newInput) => (input.value = newInput);
 </script>
 
 <template>
-  <div class="margin-btm">Site Client</div>
+  <div class="margin-btm">Ajouter site client</div>
   <div>
-    <BaseListBox
+    <BaseCombobox
       v-model="siteClient"
       :options="siteClientsArr"
       placeholder="Site Client"
+      :emptyPlaceholder="'Aucun site Client'"
       :propertyToDisplay="'siteCode'"
       :query="input"
       @update:queryValue="updateInput"

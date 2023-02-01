@@ -15,6 +15,7 @@ const props = defineProps({
     type: String,
     default: "Select option",
   },
+  emptyPlaceholder: String,
   propertyToDisplay: String,
   query: String,
 });
@@ -30,6 +31,13 @@ const filteredOptions = computed(() =>
           .includes(props.query.toLowerCase());
       })
 );
+
+const updateDisplayValue = (option) => {
+  if (Object.keys(option).length === 0) return "";
+  return option[props.propertyToDisplay]
+    ? option[props.propertyToDisplay]
+    : option;
+};
 </script>
 
 <template>
@@ -40,7 +48,7 @@ const filteredOptions = computed(() =>
     <ComboboxInput
       :placeholder="props.placeholder"
       @change="emit('update:queryValue', $event.target.value)"
-      :displayValue="(option) => option[propertyToDisplay]"
+      :displayValue="updateDisplayValue"
       class="margin-btm"
     />
     <ComboboxOptions class="z-10 container-display-options">
@@ -53,7 +61,7 @@ const filteredOptions = computed(() =>
         <span>{{ option[props.propertyToDisplay] }}</span>
       </ComboboxOption>
       <span v-if="filteredOptions.length === 0 && props.query !== ''">
-        Aucun site client
+        {{ props.emptyPlaceholder }}
       </span>
     </ComboboxOptions>
   </Combobox>
