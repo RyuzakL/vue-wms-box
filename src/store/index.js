@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import user from "./modules/user";
-import fetchHelper from "@/helper/fetchHelper";
+import fetchHelper from "@/helper/fetchHelper.js";
 
 export default createStore({
   state: {

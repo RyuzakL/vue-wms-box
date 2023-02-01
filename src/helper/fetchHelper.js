@@ -3,10 +3,6 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "https://my-json-server.typicode.com/RyuzakL/wms",
   withCredentials: false,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
 });
 
 export default {
@@ -16,9 +12,9 @@ export default {
   getOrder() {
     return api.get("/orders");
   },
-  getSiteClients(input) {
+  getSiteClients(inputFilter = "", domain, username, password) {
     return api.post(
-      "https://wms.parcelontime.es/api/admin/datatable/site",
+      `https://${domain}/api/admin/datatable/site`,
       {
         first: 0,
         rows: 59,
@@ -28,15 +24,32 @@ export default {
         filters: {
           siteCode: {
             matchMode: "startsWith",
-            value: input,
+            value: inputFilter,
           },
         },
       },
       {
-        headers: {
-          Accept: "application/json",
-          Authorization: "Basic YmVuamFtaW46YmVuamFtaW4=",
-          "Content-Type": "application/json",
+        auth: {
+          username: username,
+          password: password,
+        },
+      }
+    );
+  },
+  postNewOrder(domain, username, password, newOrder, ID) {
+    axios.post(
+      `https://${domain}/api/customer/sales/order/create`,
+      // '{\n\t"reference": ""\n}',
+      {
+        newOrder,
+      },
+      {
+        params: {
+          siteId: ID,
+        },
+        auth: {
+          username: username,
+          password: password,
         },
       }
     );

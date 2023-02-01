@@ -1,10 +1,10 @@
 <script setup>
-import fetchHelper from "../helper/fetchHelper";
+import fetchHelper from "@/helper/fetchHelper.js";
 import BaseCombobox from "@/components/BaseCombobox.vue";
 import { watch, ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-
+const user = computed(() => store.state.user);
 const siteClient = computed({
   get: () => store.state.siteClient,
   set: (newSiteClientCode) => {
@@ -21,7 +21,13 @@ const input = ref("");
 
 watch(input, async () => {
   if (!input.value) return;
-  const res = await fetchHelper.getSiteClients(input.value);
+  const res = await fetchHelper.getSiteClients(
+    input.value,
+    user.value.domain,
+    user.value.username,
+    user.value.password
+  );
+  console.log(res);
   const data = await res.data.values;
   siteClientsArr.value = data;
 });

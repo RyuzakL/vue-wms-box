@@ -37,6 +37,11 @@
   letter-spacing: 1px;
 }
 
+.error-msg {
+  color: red;
+  font-weight: 700;
+}
+
 input {
   padding: 0.5rem 0.7rem;
   border-radius: 5px;

@@ -1,20 +1,21 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import fetchHelper from "../helper/fetchHelper";
+import orderJSON from "../../orders.json";
 
 const store = useStore();
 const addedBoxs = computed(() => store.state.addedBoxs);
 const order = computed(() => store.state.order);
+const user = computed(() => store.state.user);
 const isCommandRegistered = computed(() => store.state.isCommandRegistered);
 const siteClient = computed(() => store.state.siteClient);
 
-const handleCommandRegistered = () =>
-  store.dispatch("setCommandRegisterd", true);
-
+const errorMessage = ref("");
 const isValid = ref(false);
 const mergedChilds = ref([]);
 
-function validateCommand() {
+const handleCommandRegistered = async () => {
   const childs = addedBoxs.value
     .map((box) => box.childs)
     .reduce((acc, value) => {
@@ -35,24 +36,39 @@ function validateCommand() {
   });
   // transformer l'objet en tableau
   mergedChilds.value = Object.values(uniqueElements);
-
   store.dispatch("updatesOrderItems", mergedChilds.value);
-  isValid.value = true;
-}
+  console.log(order.value);
+  console.log(JSON.stringify(order.value, null, 2));
+
+  try {
+    const res = fetchHelper.postNewOrder(
+      user.value.domain,
+      user.value.username,
+      user.value.password,
+      order.value,
+      siteClient.value.siteId
+    );
+    if (res.status !== 200) return;
+    store.dispatch("setCommandRegisterd", true);
+  } catch (err) {
+    console.error(`il y a eu une erreur ${err.message}`);
+    errorMessage.value = "Impossible d'envoyer la commande.";
+  }
+};
 </script>
 
 <template>
   <div v-if="!isCommandRegistered">
     <button
       class="btn-validate margin-btm"
-      @click="validateCommand"
+      @click="isValid = true"
       v-if="
         addedBoxs.length > 0 && order.reference !== '' && siteClient.siteCode
       "
     >
       Valider la commande
     </button>
-    <div v-show="isValid" class="send-message">
+    <div v-show="isValid" class="send-message margin-btm">
       <p class="margin-btm">
         Êtes-vous sure de vouloir envoyer votre commande ?
       </p>
@@ -60,6 +76,7 @@ function validateCommand() {
       .
       <button @click="isValid = false">NON</button>
     </div>
+    <span class="error-msg">{{ errorMessage }}</span>
   </div>
   <div v-else class="container-register">
     <h2 class="margin-btm">Votre commande a bien été enregistrer !</h2>
