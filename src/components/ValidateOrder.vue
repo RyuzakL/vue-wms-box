@@ -41,7 +41,7 @@ const handleCommandRegistered = async () => {
   console.log(JSON.stringify(order.value, null, 2));
 
   try {
-    const res = fetchHelper.postNewOrder(
+    const res = await fetchHelper.postNewOrder(
       user.value.domain,
       user.value.username,
       user.value.password,

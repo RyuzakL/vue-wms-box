@@ -38,10 +38,10 @@ export default {
   },
   postNewOrder(domain, username, password, newOrder, ID) {
     axios.post(
-      `https://${domain}/api/customer/sales/order/create`,
-      // '{\n\t"reference": ""\n}',
+      // `https://${domain}/api/customer/sales/order/create`,
+      `#`,
       {
-        newOrder,
+        ...newOrder,
       },
       {
         params: {
@@ -50,6 +50,10 @@ export default {
         auth: {
           username: username,
           password: password,
+        },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
       }
     );
