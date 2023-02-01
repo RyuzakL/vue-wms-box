@@ -1,19 +1,11 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "https://my-json-server.typicode.com/RyuzakL/wms",
-  withCredentials: false,
-});
-
 export default {
-  getBoxs() {
-    return api.get("/boxs");
-  },
   getOrder() {
-    return api.get("/orders");
+    return axios.get("https://my-json-server.typicode.com/RyuzakL/wms/orders");
   },
   getSiteClients(inputFilter = "", domain, username, password) {
-    return api.post(
+    return axios.post(
       `https://${domain}/api/admin/datatable/site`,
       {
         first: 0,
@@ -37,9 +29,8 @@ export default {
     );
   },
   postNewOrder(domain, username, password, newOrder, ID) {
-    axios.post(
-      // `https://${domain}/api/customer/sales/order/create`,
-      `#`,
+    return axios.post(
+      `https://${domain}/api/customer/sales/order/create`,
       {
         ...newOrder,
       },
@@ -50,10 +41,6 @@ export default {
         auth: {
           username: username,
           password: password,
-        },
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
         },
       }
     );

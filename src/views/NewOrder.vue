@@ -9,11 +9,11 @@ import AddClientSite from "../components/AddClientSite.vue";
 
 const router = useRouter();
 const store = useStore();
-const isUserLogged = computed(() => store.state.user.isUserLogged);
+const user = computed(() => store.state.userModule.user);
 const isCommandRegistered = computed(() => store.state.isCommandRegistered);
 
 onMounted(() => {
-  if (!isUserLogged.value) router.push({ name: "login" });
+  if (!user.value.isLogged) router.push({ name: "login" });
 });
 </script>
 

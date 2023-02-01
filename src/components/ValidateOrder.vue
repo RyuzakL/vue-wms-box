@@ -2,20 +2,41 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import fetchHelper from "../helper/fetchHelper";
-import orderJSON from "../../orders.json";
 
 const store = useStore();
 const addedBoxs = computed(() => store.state.addedBoxs);
 const order = computed(() => store.state.order);
-const user = computed(() => store.state.user);
 const isCommandRegistered = computed(() => store.state.isCommandRegistered);
 const siteClient = computed(() => store.state.siteClient);
+const user = computed(() => store.state.userModule.user);
 
 const errorMessage = ref("");
 const isValid = ref(false);
 const mergedChilds = ref([]);
 
-const handleCommandRegistered = async () => {
+const validateNewOrder = () => {
+  mergedChilds.value = mergedDuplication();
+  store.dispatch("updatesOrderItems", mergedChilds.value);
+
+  try {
+    const res = fetchHelper.postNewOrder(
+      user.value.domain,
+      user.value.username,
+      user.value.password,
+      order.value,
+      siteClient.value.siteId
+    );
+    if (res.status !== 200) return;
+    store.dispatch("setCommandRegisterd", true);
+  } catch (err) {
+    console.error(
+      `il y a eu une erreur ${err.message} : [${err.response.status}]`
+    );
+    errorMessage.value = "Impossible d'envoyer la commande.";
+  }
+};
+
+function mergedDuplication() {
   const childs = addedBoxs.value
     .map((box) => box.childs)
     .reduce((acc, value) => {
@@ -35,26 +56,8 @@ const handleCommandRegistered = async () => {
     }
   });
   // transformer l'objet en tableau
-  mergedChilds.value = Object.values(uniqueElements);
-  store.dispatch("updatesOrderItems", mergedChilds.value);
-  console.log(order.value);
-  console.log(JSON.stringify(order.value, null, 2));
-
-  try {
-    const res = await fetchHelper.postNewOrder(
-      user.value.domain,
-      user.value.username,
-      user.value.password,
-      order.value,
-      siteClient.value.siteId
-    );
-    if (res.status !== 200) return;
-    store.dispatch("setCommandRegisterd", true);
-  } catch (err) {
-    console.error(`il y a eu une erreur ${err.message}`);
-    errorMessage.value = "Impossible d'envoyer la commande.";
-  }
-};
+  return Object.values(uniqueElements);
+}
 </script>
 
 <template>
@@ -72,7 +75,7 @@ const handleCommandRegistered = async () => {
       <p class="margin-btm">
         Êtes-vous sure de vouloir envoyer votre commande ?
       </p>
-      <button @click="handleCommandRegistered">OUI</button>
+      <button @click="validateNewOrder">OUI</button>
       .
       <button @click="isValid = false">NON</button>
     </div>

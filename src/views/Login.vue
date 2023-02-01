@@ -1,51 +1,70 @@
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import fetchHelper from "@/helper/fetchHelper.js";
 
 const router = useRouter();
 const store = useStore();
-
-const user = computed(() => store.state.user);
-console.log(user.value);
+const user = computed(() => store.state.userModule.user);
 
 onMounted(() => {
-  if (user.value.isUserLogged) router.push({ name: "new-order" });
+  if (user.value.isLogged) router.push({ name: "new-order" });
 });
 
 const errorMessage = ref("");
 
-const userInput = reactive({
+const userInput = ref({
   username: "",
   password: "",
   domain: "",
 });
 
+const boxsInput = ref("");
+
 async function onSubmit() {
   try {
     const res = await fetchHelper.getSiteClients(
       "",
-      "wms.parcelontime.es",
-      userInput.username,
-      userInput.password
+      userInput.value.domain,
+      userInput.value.username,
+      userInput.value.password
     );
+
     if (res.status !== 200) return;
-    store.dispatch("user/logUser", true);
-    store.dispatch("user/setPassword", userInput.password);
-    store.dispatch("user/setUsername", userInput.username);
-    store.dispatch("user/setDomain", userInput.domain);
+    store.dispatch("userModule/setUser", {
+      ...userInput.value,
+      isLogged: true,
+    });
+    setBoxs();
     router.push({ name: "new-order" });
   } catch (err) {
-    errorMessage.value = "il y a eu une erreur lors de la connexion";
+    console.log(err);
+    errorMessage.value = err.message;
   }
+}
 
-  // if (JSON.stringify(user) === JSON.stringify(userToMatch)) {
-  //   store.dispatch("user/logUser", true);
-  //   router.push({ name: "new-order" });
-  // } else {
-  //   errorMessage.value = "veuillez entrer des identifiants valides";
-  // }
+function setBoxs() {
+  store.dispatch("setBoxs", transformInputBoxs());
+}
+function transformInputBoxs() {
+  if (!boxsInput.value) throw new Error("Veuillez insérer des boxs");
+
+  const lines = boxsInput.value.split("\n");
+  const obj = {};
+  try {
+    lines.forEach((line) => {
+      const [parentSku, childSku, qty] = line.split("\t");
+      if (!obj[parentSku]) {
+        obj[parentSku] = { sku: parentSku, childs: [] };
+      }
+      obj[parentSku].childs.push({ sku: childSku.trim(), qty: parseInt(qty) });
+    });
+    delete obj["REF BOX"];
+    return Object.values(obj);
+  } catch (err) {
+    throw new Error("Veuillez insérer des box valides");
+  }
 }
 </script>
 
@@ -56,7 +75,6 @@ async function onSubmit() {
       Veuillez vous connectez et rentrer l'URL de l'entrepot avant d'ajouter une
       commande.
     </p>
-    <div class="error-msg">{{ errorMessage }}</div>
     <form class="container-input" @submit.prevent="onSubmit">
       <input
         v-model.trim="userInput.username"
@@ -69,7 +87,14 @@ async function onSubmit() {
         placeholder="mot de passe"
       />
       <input v-model.trim="userInput.domain" type="text" placeholder="domain" />
+      <textarea
+        v-model.trim="boxsInput"
+        cols="30"
+        rows="10"
+        placeholder="Ajoutez box ici"
+      />
       <button submit>Se connecter</button>
+      <div class="error-msg">{{ errorMessage }}</div>
     </form>
   </div>
 </template>

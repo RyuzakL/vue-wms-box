@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import { useStore } from "vuex";
 import BaseCombobox from "./BaseCombobox.vue";
@@ -10,7 +10,6 @@ const boxs = computed(() => store.state.boxs);
 const inputQuery = ref("");
 
 onMounted(() => {
-  store.dispatch("fetchBoxs");
   store.dispatch("fetchOrder");
 });
 
@@ -31,13 +30,10 @@ function addNewBox() {
     qty: selectedBox.value.boxQty,
     childs: currentBox.childs,
   });
-
   selectedBox.value.sku = "";
   selectedBox.value.boxQty = 1;
 }
 const updateInput = (newInput) => (inputQuery.value = newInput);
-
-watch(selectedBox, () => {});
 </script>
 
 <template>

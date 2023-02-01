@@ -4,7 +4,7 @@ import BaseCombobox from "@/components/BaseCombobox.vue";
 import { watch, ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-const user = computed(() => store.state.user);
+const user = computed(() => store.state.userModule.user);
 const siteClient = computed({
   get: () => store.state.siteClient,
   set: (newSiteClientCode) => {
@@ -27,7 +27,6 @@ watch(input, async () => {
     user.value.username,
     user.value.password
   );
-  console.log(res);
   const data = await res.data.values;
   siteClientsArr.value = data;
 });

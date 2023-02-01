@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import user from "./modules/user";
+import userModule from "./modules/user";
 import fetchHelper from "@/helper/fetchHelper.js";
 
 export default createStore({
@@ -34,16 +34,6 @@ export default createStore({
     },
   },
   actions: {
-    async fetchBoxs({ commit }) {
-      try {
-        const response = await fetchHelper.getBoxs();
-        commit("SET_BOXS", response.data);
-      } catch (err) {
-        console.error(
-          `Il y a eu une erreur lors de la requête vers les boxs [${err.response.status}]`
-        );
-      }
-    },
     async fetchOrder({ commit }) {
       try {
         const response = await fetchHelper.getOrder();
@@ -53,6 +43,9 @@ export default createStore({
           `Il y a eu une erreur lors de la requête vers l'order [${err.response.status}]`
         );
       }
+    },
+    setBoxs({ commit }, boxs) {
+      commit("SET_BOXS", boxs);
     },
     addBox({ commit }, box) {
       commit("ADD_BOX", box);
@@ -71,6 +64,6 @@ export default createStore({
     },
   },
   modules: {
-    user,
+    userModule,
   },
 });
