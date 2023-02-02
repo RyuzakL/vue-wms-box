@@ -38,23 +38,12 @@ const updateInput = (newInput) => (inputQuery.value = newInput);
 
 <template>
   <div class="margin-btm">Ajouter box :</div>
-  <BaseCombobox
-    v-model="selectedBox.sku"
-    :options="boxs"
-    placeholder="référence box"
-    :emptyPlaceholder="'Aucune box trouver'"
-    :propertyToDisplay="'sku'"
-    :query="inputQuery"
-    @update:queryValue="updateInput"
-  />
+  <BaseCombobox v-model="selectedBox.sku" :options="boxs" placeholder="référence box"
+    :emptyPlaceholder="'Aucune box trouver'" :propertyToDisplay="'sku'" :query="inputQuery"
+    @update:queryValue="updateInput" />
   .
-  <input
-    min="1"
-    v-model.number="selectedBox.boxQty"
-    v-show="selectedBox.sku"
-    placeholder="Ajouter quantité"
-    type="number"
-  />
+  <input min="1" v-model.number="selectedBox.boxQty" v-show="selectedBox.sku" placeholder="Ajouter quantité"
+    type="number" />
   <button @click="addNewBox" v-show="selectedBox.boxQty && selectedBox.sku">
     Ajoutez Box
   </button>

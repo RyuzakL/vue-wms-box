@@ -62,13 +62,9 @@ function mergedDuplication() {
 
 <template>
   <div v-if="!isCommandRegistered">
-    <button
-      class="btn-validate margin-btm"
-      @click="isValid = true"
-      v-if="
-        addedBoxs.length > 0 && order.reference !== '' && siteClient.siteCode
-      "
-    >
+    <button class="btn-validate margin-btm" @click="isValid = true" v-if="
+      addedBoxs.length > 0 && order.reference !== '' && siteClient.siteCode
+    ">
       Valider la commande
     </button>
     <div v-show="isValid" class="send-message margin-btm">
@@ -89,11 +85,7 @@ function mergedDuplication() {
       <div>
         Site client : {{ siteClient.siteName }}/{{ siteClient.siteCode }}
       </div>
-      <div
-        class="detail-command"
-        v-for="(child, index) in mergedChilds"
-        :key="index"
-      >
+      <div class="detail-command" v-for="(child, index) in mergedChilds" :key="index">
         <div class="big margin-btm">N°{{ index + 1 }}</div>
         <div>Sku: {{ child.sku }}</div>
         <div>Quantité: {{ child.qty }}</div>

@@ -6,6 +6,7 @@ const routes = [
   { path: "/login", name: "login", component: Login },
   { path: "/order", name: "new-order", component: NewOrder },
   { path: "/", redirect: { name: "login" } },
+  // login à modifier et rajouter navigation guards à la place
 ];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

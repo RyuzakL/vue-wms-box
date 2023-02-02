@@ -7,11 +7,7 @@ const addedBoxs = computed(() => store.state.addedBoxs);
 
 <template>
   <h3 class="h3-box" v-show="addedBoxs.length > 0">Box ajoutée(s) :</h3>
-  <div
-    v-for="(addedBox, index) in addedBoxs"
-    :key="index"
-    class="display-current-box"
-  >
+  <div v-for="(addedBox, index) in addedBoxs" :key="index" class="display-current-box">
     <details>
       <summary class="container-current-box">
         N°{{ index + 1 }} | SKU: {{ addedBox.sku }} - QTY: {{ addedBox.qty }}
@@ -33,6 +29,7 @@ const addedBoxs = computed(() => store.state.addedBoxs);
   width: fit-content;
   border-radius: 20px;
 }
+
 .container-current-box {
   margin-top: 1rem;
 }
@@ -41,7 +38,7 @@ const addedBoxs = computed(() => store.state.addedBoxs);
   padding: 1rem 1.3rem;
 }
 
-.container-child-current-box > * {
+.container-child-current-box>* {
   margin-top: 0.5rem;
 }
 </style>

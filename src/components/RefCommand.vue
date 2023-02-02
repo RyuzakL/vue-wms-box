@@ -18,11 +18,6 @@ function isValidInput(e) {
 <template>
   <div v-if="order" class="margin-btm">
     <div class="margin-btm">Ajouter référence commande :</div>
-    <input
-      v-model="order.reference"
-      @keypress="isValidInput"
-      type="text"
-      placeholder="référence commande"
-    />
+    <input v-model="order.reference" @keypress="isValidInput" type="text" placeholder="référence commande" />
   </div>
 </template>

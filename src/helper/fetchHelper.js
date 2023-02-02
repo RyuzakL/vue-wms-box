@@ -45,4 +45,7 @@ export default {
       }
     );
   },
+  // Trouver un moyen d'importer mon store pour utiliser
+  // Les données utilisateur en tant que valeur par defaut pour les arguments
+  // à fin de ne pas être obliger de toujours mettre id,password,domain
 };

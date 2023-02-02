@@ -76,23 +76,10 @@ function transformInputBoxs() {
       commande.
     </p>
     <form class="container-input" @submit.prevent="onSubmit">
-      <input
-        v-model.trim="userInput.username"
-        type="text"
-        placeholder="identifiant"
-      />
-      <input
-        v-model.trim="userInput.password"
-        type="password"
-        placeholder="mot de passe"
-      />
+      <input v-model.trim="userInput.username" type="text" placeholder="identifiant" />
+      <input v-model.trim="userInput.password" type="password" placeholder="mot de passe" />
       <input v-model.trim="userInput.domain" type="text" placeholder="domain" />
-      <textarea
-        v-model.trim="boxsInput"
-        cols="30"
-        rows="10"
-        placeholder="Ajoutez box ici"
-      />
+      <textarea v-model.trim="boxsInput" cols="30" rows="10" placeholder="Ajoutez box ici" />
       <button submit>Se connecter</button>
       <div class="error-msg">{{ errorMessage }}</div>
     </form>

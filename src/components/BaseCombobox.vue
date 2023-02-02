@@ -26,10 +26,10 @@ const filteredOptions = computed(() =>
   props.query === ""
     ? props.options
     : props.options.filter((option) => {
-        return option[props.propertyToDisplay]
-          .toLowerCase()
-          .includes(props.query.toLowerCase());
-      })
+      return option[props.propertyToDisplay]
+        .toLowerCase()
+        .includes(props.query.toLowerCase());
+    })
 );
 
 const updateDisplayValue = (option) => {
@@ -42,23 +42,12 @@ const updateDisplayValue = (option) => {
 </script>
 
 <template>
-  <Combobox
-    @update:model-value="(value) => emit('update:modelValue', value)"
-    :model-value="props.modelValue"
-  >
-    <ComboboxInput
-      :placeholder="props.placeholder"
-      @change="emit('update:queryValue', $event.target.value)"
-      :displayValue="updateDisplayValue"
-      class="margin-btm"
-    />
+  <Combobox @update:model-value="(value) => emit('update:modelValue', value)" :model-value="props.modelValue">
+    <ComboboxInput :placeholder="props.placeholder" @change="emit('update:queryValue', $event.target.value)"
+      :displayValue="updateDisplayValue" class="margin-btm" />
     <ComboboxOptions class="z-10 container-display-options">
-      <ComboboxOption
-        class="option"
-        v-for="(option, index) in filteredOptions"
-        :key="index"
-        :value="option[props.propertyToDisplay]"
-      >
+      <ComboboxOption class="option" v-for="(option, index) in filteredOptions" :key="index"
+        :value="option[props.propertyToDisplay]">
         <span>{{ option[props.propertyToDisplay] }}</span>
       </ComboboxOption>
       <span v-if="filteredOptions.length === 0 && props.query !== ''">
@@ -83,7 +72,7 @@ const updateDisplayValue = (option) => {
   overflow-y: scroll;
 }
 
-.option + .option {
+.option+.option {
   margin-top: 0.3rem;
   cursor: pointer;
 }
