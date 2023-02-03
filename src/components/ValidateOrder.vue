@@ -19,14 +19,14 @@ const validateNewOrder = () => {
   store.dispatch("updatesOrderItems", mergedChilds.value);
 
   try {
-    const res = fetchHelper.postNewOrder(
-      user.value.domain,
-      user.value.username,
-      user.value.password,
-      order.value,
-      siteClient.value.siteId
-    );
-    if (res.status !== 200) return;
+    // const res = fetchHelper.postNewOrder(
+    //   user.value.domain,
+    //   user.value.username,
+    //   user.value.password,
+    //   order.value,
+    //   siteClient.value.siteId
+    // );
+    // if (res.status !== 200) return;
     store.dispatch("setCommandRegisterd", true);
   } catch (err) {
     console.error(

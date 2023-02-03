@@ -32,22 +32,17 @@ const filteredOptions = computed(() =>
     })
 );
 
-const updateDisplayValue = (option) => {
-  if (Object.keys(option).length === 0) return "";
-  return option[props.propertyToDisplay]
-    ? option[props.propertyToDisplay]
-    : option;
-  // si jamais la valeur passé dans le v-model n'est pas un objet
-};
+const updateDisplayValue = (option) => option[props.propertyToDisplay]
+const handleUpdateModelValue = (value) => emit('update:modelValue', value)
+const handleUpdateQueryValue = (e) => emit('update:queryValue', e.target.value)
 </script>
 
 <template>
-  <Combobox @update:model-value="(value) => emit('update:modelValue', value)" :model-value="props.modelValue">
-    <ComboboxInput :placeholder="props.placeholder" @change="emit('update:queryValue', $event.target.value)"
-      :displayValue="updateDisplayValue" class="margin-btm" />
+  <Combobox @update:model-value="handleUpdateModelValue" :model-value="props.modelValue">
+    <ComboboxInput :placeholder="props.placeholder" @change="handleUpdateQueryValue" :displayValue="updateDisplayValue"
+      class="margin-btm" />
     <ComboboxOptions class="z-10 container-display-options">
-      <ComboboxOption class="option" v-for="(option, index) in filteredOptions" :key="index"
-        :value="option[props.propertyToDisplay]">
+      <ComboboxOption class="option" v-for="(option, index) in filteredOptions" :key="index" :value="option">
         <span>{{ option[props.propertyToDisplay] }}</span>
       </ComboboxOption>
       <span v-if="filteredOptions.length === 0 && props.query !== ''">

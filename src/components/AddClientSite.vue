@@ -8,10 +8,10 @@ const store = useStore();
 const user = computed(() => store.state.userModule.user);
 const siteClient = computed({
   get: () => store.state.siteClient,
-  set: (newSiteClientCode) => {
-    const newSiteClient = siteClientsArr.value.find(
-      (siteClient) => newSiteClientCode === siteClient.siteCode
-    );
+  set: (newSiteClient) => {
+    // const newSiteClient = siteClientsArr.value.find(
+    //   (siteClient) => newSiteClientCode === siteClient.siteCode
+    // );
     store.dispatch("updateSiteClient", newSiteClient);
     // chope l'object site client basé sur la string de l'input qui est un site code
   },
