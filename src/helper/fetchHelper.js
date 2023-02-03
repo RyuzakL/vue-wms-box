@@ -1,12 +1,23 @@
 import axios from "axios";
+import store from "@/store/index.js";
+import { computed } from "vue";
+
+const userDomain = computed(() => store.state.userModule.user.domain);
+const userUsername = computed(() => store.state.userModule.user.username);
+const userPassword = computed(() => store.state.userModule.user.password);
+const siteID = computed(() => store.state.siteClient.siteId);
 
 export default {
-  getOrder() {
-    return axios.get("https://my-json-server.typicode.com/RyuzakL/wms/orders");
-  },
-  getSiteClients(inputFilter = "", domain, username, password) {
+  getSiteClients(
+    inputFilter = "",
+    config = {
+      domain: userDomain.value,
+      username: userUsername.value,
+      password: userPassword.value,
+    }
+  ) {
     return axios.post(
-      `https://${domain}/api/admin/datatable/site`,
+      `https://${config.domain}/api/admin/datatable/site`,
       {
         first: 0,
         rows: 59,
@@ -22,30 +33,34 @@ export default {
       },
       {
         auth: {
-          username: username,
-          password: password,
+          username: config.username,
+          password: config.password,
         },
       }
     );
   },
-  postNewOrder(domain, username, password, newOrder, ID) {
+  postNewOrder(
+    newOrder,
+    config = {
+      domain: userDomain.value,
+      username: userUsername.value,
+      password: userPassword.value,
+    }
+  ) {
     return axios.post(
-      `https://${domain}/api/customer/sales/order/create`,
+      `https://${config.domain}/api/customer/sales/order/create`,
       {
         ...newOrder,
       },
       {
         params: {
-          siteId: ID,
+          siteId: siteID.value,
         },
         auth: {
-          username: username,
-          password: password,
+          username: config.username,
+          password: config.password,
         },
       }
     );
   },
-  // Trouver un moyen d'importer mon store pour utiliser
-  // Les données utilisateur en tant que valeur par defaut pour les arguments
-  // à fin de ne pas être obliger de toujours mettre id,password,domain
 };

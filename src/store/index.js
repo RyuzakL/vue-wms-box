@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import userModule from "./modules/user";
-import fetchHelper from "@/helper/fetchHelper.js";
 
 export default createStore({
   state: {
@@ -36,11 +35,14 @@ export default createStore({
   actions: {
     async fetchOrder({ commit }) {
       try {
-        const response = await fetchHelper.getOrder();
-        commit("SET_ORDER", response.data.pop());
+        const response = await fetch(
+          "https://my-json-server.typicode.com/RyuzakL/wms/orders"
+        );
+        const data = await response.json();
+        commit("SET_ORDER", data.pop());
       } catch (err) {
         console.error(
-          `Il y a eu une erreur lors de la requête vers l'order [${err.response.status}]`
+          `Il y a eu une erreur lors de la requête vers l'order [${err.message}]`
         );
       }
     },

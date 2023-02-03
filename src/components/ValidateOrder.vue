@@ -7,9 +7,7 @@ import fetchHelper from "../helper/fetchHelper";
 const store = useStore();
 const addedBoxs = computed(() => store.state.addedBoxs);
 const order = computed(() => store.state.order);
-const isCommandRegistered = computed(() => store.state.isCommandRegistered);
 const siteClient = computed(() => store.state.siteClient);
-const user = computed(() => store.state.userModule.user);
 
 const errorMessage = ref("");
 const isValid = ref(false);
@@ -19,17 +17,10 @@ const validateNewOrder = () => {
   mergedChilds.value = mergedDuplication();
   store.dispatch("updatesOrderItems", mergedChilds.value);
   try {
-    const res = fetchHelper.postNewOrder(
-      user.value.domain,
-      user.value.username,
-      user.value.password,
-      order.value,
-      siteClient.value.siteId
-    );
+    const res = fetchHelper.postNewOrder(order.value);
     if (res.status !== 200) return;
     store.dispatch("setCommandRegisterd", true);
     router.push({ name: "registered" })
-
   } catch (err) {
     console.error(
       `il y a eu une erreur ${err.message} : [${err.response.status}]`
@@ -63,21 +54,19 @@ function mergedDuplication() {
 </script>
 
 <template>
-  <div v-if="!isCommandRegistered">
-    <button class="btn-validate margin-btm" @click="isValid = true" v-if="
-      addedBoxs.length > 0 && order.reference !== '' && siteClient.siteCode
-    ">
-      Valider la commande
-    </button>
-    <div v-show="isValid" class="send-message margin-btm">
-      <p class="margin-btm">
-        Êtes-vous sure de vouloir envoyer votre commande ?
-      </p>
-      <button @click="validateNewOrder">OUI</button>
-      .
-      <button @click="isValid = false">NON</button>
-    </div>
-    <span class="error-msg">{{ errorMessage }}</span>
+  <button class="btn-validate margin-btm" @click="isValid = true" v-if="
+    addedBoxs.length > 0 && order.reference !== '' && siteClient.siteCode
+  ">
+    Valider la commande
+  </button>
+  <div v-show="isValid" class="send-message margin-btm">
+    <p class="margin-btm">
+      Êtes-vous sure de vouloir envoyer votre commande ?
+    </p>
+    <button @click="validateNewOrder">OUI</button>
+    .
+    <button @click="isValid = false">NON</button>
   </div>
+  <span class="error-msg">{{ errorMessage }}</span>
 
 </template>

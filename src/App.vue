@@ -9,6 +9,7 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
+
 .container {
   margin: 0 auto;
   width: 80%;
@@ -59,4 +60,3 @@ button {
 }
 </style>
 
-<script></script>

@@ -18,12 +18,7 @@ const inputQuery = ref("");
 
 watch(inputQuery, async () => {
   if (!inputQuery.value) return;
-  const res = await fetchHelper.getSiteClients(
-    inputQuery.value,
-    user.value.domain,
-    user.value.username,
-    user.value.password
-  );
+  const res = await fetchHelper.getSiteClients(inputQuery.value);
   const data = await res.data.values;
   siteClientsArr.value = data;
   // modifier la fonction de manière à garder les résultats en caches

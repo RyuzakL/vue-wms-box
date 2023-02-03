@@ -21,9 +21,11 @@ async function onSubmit() {
   try {
     const res = await fetchHelper.getSiteClients(
       "",
-      userInput.value.domain,
-      userInput.value.username,
-      userInput.value.password
+      {
+        password: userInput.value.password,
+        domain: userInput.value.domain,
+        username: userInput.value.username,
+      }
     );
 
     if (res.status !== 200) return;
