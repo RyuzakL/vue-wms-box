@@ -9,11 +9,7 @@ const user = computed(() => store.state.userModule.user);
 const siteClient = computed({
   get: () => store.state.siteClient,
   set: (newSiteClient) => {
-    // const newSiteClient = siteClientsArr.value.find(
-    //   (siteClient) => newSiteClientCode === siteClient.siteCode
-    // );
     store.dispatch("updateSiteClient", newSiteClient);
-    // chope l'object site client basé sur la string de l'input qui est un site code
   },
 });
 
@@ -30,7 +26,7 @@ watch(inputQuery, async () => {
   );
   const data = await res.data.values;
   siteClientsArr.value = data;
-  // Voir pour midifier la fonction de manière à garder les résultats en caches
+  // modifier la fonction de manière à garder les résultats en caches
   // sans doublon*
 });
 

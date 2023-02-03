@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import router from "../router";
 import fetchHelper from "../helper/fetchHelper";
 
 const store = useStore();
@@ -17,17 +18,18 @@ const mergedChilds = ref([]);
 const validateNewOrder = () => {
   mergedChilds.value = mergedDuplication();
   store.dispatch("updatesOrderItems", mergedChilds.value);
-
   try {
-    // const res = fetchHelper.postNewOrder(
-    //   user.value.domain,
-    //   user.value.username,
-    //   user.value.password,
-    //   order.value,
-    //   siteClient.value.siteId
-    // );
-    // if (res.status !== 200) return;
+    const res = fetchHelper.postNewOrder(
+      user.value.domain,
+      user.value.username,
+      user.value.password,
+      order.value,
+      siteClient.value.siteId
+    );
+    if (res.status !== 200) return;
     store.dispatch("setCommandRegisterd", true);
+    router.push({ name: "registered" })
+
   } catch (err) {
     console.error(
       `il y a eu une erreur ${err.message} : [${err.response.status}]`
@@ -77,29 +79,5 @@ function mergedDuplication() {
     </div>
     <span class="error-msg">{{ errorMessage }}</span>
   </div>
-  <div v-else class="container-register">
-    <h2 class="margin-btm">Votre commande a bien été enregistrer !</h2>
-    <h3 class="margin-btm">Récapitulatif :</h3>
-    <div class="container-details-command">
-      <div>Référence : {{ order.reference }}</div>
-      <div>
-        Site client : {{ siteClient.siteName }}/{{ siteClient.siteCode }}
-      </div>
-      <div class="detail-command" v-for="(child, index) in mergedChilds" :key="index">
-        <div class="big margin-btm">N°{{ index + 1 }}</div>
-        <div>Sku: {{ child.sku }}</div>
-        <div>Quantité: {{ child.qty }}</div>
-      </div>
-    </div>
-  </div>
-</template>
 
-<style scoped>
-.detail-command {
-  margin: 1rem 0;
-  padding: 0.7rem 1rem;
-  background-color: rgb(237, 236, 236);
-  border-radius: 10px;
-  width: 350px;
-}
-</style>
+</template>

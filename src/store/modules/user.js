@@ -18,6 +18,7 @@ const mutations = {
     state.user = userInfo;
   },
 };
+
 export default {
   namespaced: true,
   state,

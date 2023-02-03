@@ -1,16 +1,11 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import fetchHelper from "@/helper/fetchHelper.js";
 
 const router = useRouter();
 const store = useStore();
-const user = computed(() => store.state.userModule.user);
-
-onMounted(() => {
-  if (user.value.isLogged) router.push({ name: "new-order" });
-});
 
 const errorMessage = ref("");
 
@@ -39,13 +34,12 @@ async function onSubmit() {
     setBoxs();
     router.push({ name: "new-order" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     errorMessage.value = err.message;
   }
 }
 
 function setBoxs() {
-  console.log(transformInputBoxs())
   store.dispatch("setBoxs", transformInputBoxs());
 }
 function transformInputBoxs() {

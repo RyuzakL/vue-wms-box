@@ -16,6 +16,7 @@ onMounted(() => {
 const selectedBox = ref({});
 
 function addNewBox() {
+  // ajoute la quantité de la box à tous ces childs
   selectedBox.value.childs.forEach((child) => (child.qty = selectedBox.value.qty));
 
   store.dispatch("addBox", selectedBox.value);
@@ -23,11 +24,6 @@ function addNewBox() {
   selectedBox.value = {};
 }
 const updateInput = (newInput) => (inputQuery.value = newInput);
-
-watch(selectedBox, () => {
-  console.log(selectedBox.value)
-  console.log(boxs.value)
-})
 </script>
 
 <template>
