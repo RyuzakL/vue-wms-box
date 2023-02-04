@@ -7,7 +7,6 @@ const order = computed(() => store.state.order)
 const siteClient = computed(() => store.state.siteClient);
 </script>
 
-
 <template>
 	<div class="container-register">
 		<h2 class="margin-btm">Votre commande a bien été enregistré!</h2>

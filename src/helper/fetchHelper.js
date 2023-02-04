@@ -16,6 +16,7 @@ export default {
       password: userPassword.value,
     }
   ) {
+    console.log("fetch clients");
     return axios.post(
       `https://${config.domain}/api/admin/datatable/site`,
       {

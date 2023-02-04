@@ -5,7 +5,6 @@ import { watch, ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const user = computed(() => store.state.userModule.user);
 const siteClient = computed({
   get: () => store.state.siteClient,
   set: (newSiteClient) => {
@@ -15,14 +14,19 @@ const siteClient = computed({
 
 const siteClientsArr = ref([]);
 const inputQuery = ref("");
+const cache = new Map();
 
 watch(inputQuery, async () => {
   if (!inputQuery.value) return;
+  if (cache.has(inputQuery.value)) {
+    siteClientsArr.value = cache.get(inputQuery.value);
+    return;
+  }
   const res = await fetchHelper.getSiteClients(inputQuery.value);
   const data = await res.data.values;
   siteClientsArr.value = data;
-  // modifier la fonction de manière à garder les résultats en caches
-  // sans doublon*
+  cache.set(inputQuery.value, data);
+  // optimisé de manière à ne pas refaire la même requête plusieurs fois  
 });
 
 const updateInput = (newInput) => (inputQuery.value = newInput);

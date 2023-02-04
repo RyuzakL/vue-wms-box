@@ -10,12 +10,31 @@ const store = useStore();
 const errorMessage = ref("");
 
 const userInput = ref({
-  username: "",
-  password: "",
-  domain: "",
+  username: "benjamin",
+  password: "benjamin",
+  domain: "wms.parcelontime.es",
 });
 
-const boxsInput = ref(``);
+const boxsInput = ref(`JBX-2302-104	            BLI-SHIPPERBLISSIM-JBX2202	1
+JBX-2302-104	            INH-HUILEDESOINFORT-JBX2301	1
+JBX-2302-104	            HEL-ALOESIGHTHYDRAT-JBX2212	1
+JBX-2302-104	            BLI-SACHETSDETHEPAN-JBX2301	1
+JBX-2302-104	            PAE-BLUSHARGANOIL-JBX2301	1
+JBX-2302-104	            HUY-CREMEVISAGEHYAL-JBX2301	1
+JBX-2302-104	            LAR-STICKALEVRESNOU-JBX2301	1
+JBX-2302-104	            BLI-BOITEVIDE2-JBX2301	1
+JBX-2302-104	            ULZ-FLYERPANDATEA-JBX2301	1
+JBX-2302-104	            MENU-JBX-2301-03	1
+JBX-2302-103	            BLI-SHIPPERBLISSIM-JBX2202	1
+JBX-2302-103	            LAR-BAUMESOSREPARAT-JBX2301	1
+JBX-2302-103	            LAR-CREMEHYDRATANTV-JBX2301	1
+JBX-2302-103	            BLI-SACHETSDETHEPAN-JBX2301	1
+JBX-2302-103	            LAR-GOMMAGEDOUXVISA-JBX2301	1
+JBX-2302-103	            LAR-STICKALEVRESNOU-JBX2301	1
+JBX-2302-103	            BLI-BOITEVIDE1-JBX2301	1
+JBX-2302-103	            LAR-MASQUEENSTICKRE-JBX2301	1
+JBX-2302-103	            ULZ-FLYERPANDATEA-JBX2301	1
+JBX-2302-103	            MENU-JBX-2301-02	1`);
 
 async function onSubmit() {
   try {
