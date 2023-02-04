@@ -22,7 +22,7 @@ watch(inputQuery, async () => {
     siteClientsArr.value = cache.get(inputQuery.value);
     return;
   }
-  const res = await fetchHelper.getSiteClients(inputQuery.value);
+  const res = await fetchHelper.getSiteClients({ query: inputQuery.value });
   const data = await res.data.values;
   siteClientsArr.value = data;
   cache.set(inputQuery.value, data);

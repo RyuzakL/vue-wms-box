@@ -8,17 +8,14 @@ const userPassword = computed(() => store.state.userModule.user.password);
 const siteID = computed(() => store.state.siteClient.siteId);
 
 export default {
-  getSiteClients(
-    inputFilter = "",
-    config = {
-      domain: userDomain.value,
-      username: userUsername.value,
-      password: userPassword.value,
-    }
-  ) {
-    console.log("fetch clients");
+  getSiteClients({
+    domain = userDomain.value,
+    username = userUsername.value,
+    password = userPassword.value,
+    query = "",
+  }) {
     return axios.post(
-      `https://${config.domain}/api/admin/datatable/site`,
+      `https://${domain}/api/admin/datatable/site`,
       {
         first: 0,
         rows: 59,
@@ -28,28 +25,26 @@ export default {
         filters: {
           siteCode: {
             matchMode: "startsWith",
-            value: inputFilter,
+            value: query,
           },
         },
       },
       {
         auth: {
-          username: config.username,
-          password: config.password,
+          username: username,
+          password: password,
         },
       }
     );
   },
-  postNewOrder(
+  postNewOrder({
+    domain = userDomain.value,
+    username = userUsername.value,
+    password = userPassword.value,
     newOrder,
-    config = {
-      domain: userDomain.value,
-      username: userUsername.value,
-      password: userPassword.value,
-    }
-  ) {
+  }) {
     return axios.post(
-      `https://${config.domain}/api/customer/sales/order/create`,
+      `https://${domain}/api/customer/sales/order/create`,
       {
         ...newOrder,
       },
@@ -58,8 +53,8 @@ export default {
           siteId: siteID.value,
         },
         auth: {
-          username: config.username,
-          password: config.password,
+          username: username,
+          password: password,
         },
       }
     );

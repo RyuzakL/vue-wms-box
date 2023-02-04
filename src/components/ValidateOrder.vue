@@ -17,7 +17,7 @@ const validateNewOrder = () => {
   mergedChilds.value = mergedDuplication();
   store.dispatch("updatesOrderItems", mergedChilds.value);
   try {
-    const res = fetchHelper.postNewOrder(order.value);
+    const res = fetchHelper.postNewOrder({ newOrder: order.value });
     if (res.status !== 200) return;
     store.dispatch("setCommandRegisterd", true);
     router.push({ name: "registered" })

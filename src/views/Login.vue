@@ -20,7 +20,6 @@ const boxsInput = ref(``);
 async function onSubmit() {
   try {
     const res = await fetchHelper.getSiteClients(
-      "",
       {
         password: userInput.value.password,
         domain: userInput.value.domain,
